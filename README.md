@@ -79,3 +79,4 @@ src/
 ---
 
 Built by [Sathwik Boddula](https://github.com/SathwikBoddula) — open to feedback and contributions!
+> ⚠️ This project is actively being worked on — more features coming soon!
