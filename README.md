@@ -1,89 +1,81 @@
-# Next.js
+# Volatix 📈
 
-A modern Next.js 15 application built with TypeScript and Tailwind CSS.
+A stock analytics dashboard I built to learn how real-world financial apps work. You type in any stock ticker, and it pulls live data and shows you charts, indicators, and price predictions — all in one place.
 
-## 🚀 Features
+---
 
-- **Next.js 15** - Latest version with improved performance and features
-- **React 19** - Latest React version with enhanced capabilities
-- **Tailwind CSS** - Utility-first CSS framework for rapid UI development
+## Why I built this
 
-## 🛠️ Installation
+I wanted to go beyond basic ML projects and build something that actually looks and feels like a real product. Volatix pulls live stock data, handles errors gracefully, and has multiple analytical views — the kind of thing you'd actually use.
 
-1. Install dependencies:
-  ```bash
-  npm install
-  # or
-  yarn install
-  ```
+---
 
-2. Start the development server:
-  ```bash
-  npm run dev
-  # or
-  yarn dev
-  ```
-3. Open [http://localhost:4028](http://localhost:4028) with your browser to see the result.
+## What you can do with it
 
-## 📁 Project Structure
+- Search any stock — Apple, Tesla, Infosys, Reliance, Bitcoin — it handles them all
+- See price history, key metrics, and market data at a glance
+- Switch between different analytical tabs (RSI, MACD, Moving Averages, etc.)
+- Run a basic backtest to see how a strategy would've performed historically
+- Get an AI-generated price forecast based on past patterns
+
+---
+
+## Tech I used
+
+- **Next.js 15 + TypeScript** — for the frontend
+- **Tailwind CSS** — for styling
+- **Recharts** — for all the charts
+- **Twelve Data API** — for live stock data (falls back to Yahoo Finance if it hits the rate limit)
+
+---
+
+## Want to run it locally?
+
+You'll need Node.js installed and a free API key from [Twelve Data](https://twelvedata.com/).
+
+```bash
+# 1. Clone the project
+git clone https://github.com/SathwikBoddula/Volatix.git
+cd Volatix
+
+# 2. Install packages
+npm install
+
+# 3. Create a .env.local file and paste this in:
+# NEXT_PUBLIC_TWELVE_DATA_API_KEY=your_key_here
+
+# 4. Start the app
+npm run dev
+```
+
+Then open `http://localhost:3000` in your browser. That's it!
+
+---
+
+## Project structure (if you're curious)
 
 ```
-nextjs/
-├── public/             # Static assets
-├── src/
-│   ├── app/            # App router components
-│   │   ├── layout.tsx  # Root layout component
-│   │   └── page.tsx    # Main page component
-│   ├── components/     # Reusable UI components
-│   ├── styles/         # Global styles and Tailwind configuration
-├── next.config.mjs     # Next.js configuration
-├── package.json        # Project dependencies and scripts
-├── postcss.config.js   # PostCSS configuration
-└── tailwind.config.js  # Tailwind CSS configuration
-
+src/
+├── app/
+│   ├── components/      # All the UI pieces (topbar, dashboard, charts)
+│   │   └── tabs/        # Each tab is its own component
+│   ├── data/
+│   │   └── mockData.ts  # Stock ticker profiles and mock data
+│   └── page.tsx         # Entry point
+├── utils/
+│   └── formatCurrency.ts  # Handles USD, INR, JPY, GBP, EUR automatically
+└── styles/
 ```
 
-## 🧩 Page Editing
+---
 
-You can start editing the page by modifying `src/app/page.tsx`. The page auto-updates as you edit the file.
+## A few things I learned building this
 
-## 🎨 Styling
+- How to handle live API data and build fallback logic when it fails
+- How technical indicators like RSI and MACD actually work under the hood
+- How to structure a Next.js project cleanly as it grows
+- That currency formatting across global stocks is way more annoying than it sounds 😅
 
-This project uses Tailwind CSS for styling with the following features:
-- Utility-first approach for rapid development
-- Custom theme configuration
-- Responsive design utilities
-- PostCSS and Autoprefixer integration
+---
 
-## 📦 Available Scripts
-
-- `npm run dev` - Start development server on port 4028
-- `npm run build` - Build the application for production
-- `npm run start` - Start the development server
-- `npm run serve` - Start the production server
-- `npm run lint` - Run ESLint to check code quality
-- `npm run lint:fix` - Fix ESLint issues automatically
-- `npm run format` - Format code with Prettier
-
-## 📱 Deployment
-
-Build the application for production:
-
-  ```bash
-  npm run build
-  ```
-
-## 📚 Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial
-
-You can check out the [Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## 🙏 Acknowledgments
-
-- Built with [Rocket.new](https://rocket.new)
-- Powered by Next.js and React
-- Styled with Tailwind CSS
+Built by [Sathwik Boddula](https://github.com/SathwikBoddula) — open to feedback and contributions!
