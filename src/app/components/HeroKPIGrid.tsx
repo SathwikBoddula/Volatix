@@ -16,10 +16,34 @@ export default function HeroKPIGrid({ data, ticker }: HeroKPIGridProps) {
   const priceChangePct = (priceChange / prevClose) * 100;
   const isPositive = priceChange >= 0;
   const ma200Dev = ((currentPrice - ma200) / ma200) * 100;
-
   const rsiState = rsi > 70 ? 'overbought' : rsi < 30 ? 'oversold' : 'neutral';
   const macdState = macd.histogram > 0 ? 'bullish' : 'bearish';
-
+  const TICKER_INFO: Record<string, string> = {
+    NVDA: 'NVIDIA Corporation · NASDAQ',
+    AAPL: 'Apple Inc. · NASDAQ',
+    TSLA: 'Tesla, Inc. · NASDAQ',
+    MSFT: 'Microsoft Corporation · NASDAQ',
+    AMZN: 'Amazon.com, Inc. · NASDAQ',
+    META: 'Meta Platforms, Inc. · NASDAQ',
+    GOOGL: 'Alphabet Inc. · NASDAQ',
+    SPY: 'SPDR S&P 500 ETF · NYSE',
+    QQQ: 'Invesco QQQ Trust · NASDAQ',
+    AMD: 'Advanced Micro Devices · NASDAQ',
+    'RELIANCE.NS': 'Reliance Industries · NSE',
+    RELIANCE: 'Reliance Industries · NSE',
+    'TCS.NS': 'Tata Consultancy Services · NSE',
+    TCS: 'Tata Consultancy Services · NSE',
+    'INFY.NS': 'Infosys Ltd. · NSE',
+    INFY: 'Infosys Ltd. · NSE',
+    'HDFCBANK.NS': 'HDFC Bank Ltd. · NSE',
+    HDFCBANK: 'HDFC Bank Ltd. · NSE',
+    'TATAMOTORS.NS': 'Tata Motors Ltd. · NSE',
+    TATAMOTORS: 'Tata Motors Ltd. · NSE',
+    'SBIN.NS': 'State Bank of India · NSE',
+    SBIN: 'State Bank of India · NSE',
+    'WIPRO.NS': 'Wipro Ltd. · NSE',
+    WIPRO: 'Wipro Ltd. · NSE',
+  };
   return (
     <div className="animate-fade-in-up">
       {/* Ticker Header */}
@@ -35,17 +59,11 @@ export default function HeroKPIGrid({ data, ticker }: HeroKPIGridProps) {
               {isPositive ? '+' : ''}{priceChangePct.toFixed(2)}%
             </span>
           </div>
-          <p className="text-sm text-muted-foreground mt-0.5">
-            {ticker === 'NVDA' ? 'NVIDIA Corporation · NASDAQ' :
-             ticker === 'AAPL' ? 'Apple Inc. · NASDAQ' :
-             ticker === 'TSLA' ? 'Tesla, Inc. · NASDAQ' :
-             ticker === 'MSFT' ? 'Microsoft Corporation · NASDAQ' :
-             `${ticker} · NASDAQ`}
-          </p>
+          <p className="text-sm text-muted-foreground mt-0.5">{TICKER_INFO[ticker] ?? `${ticker} · NASDAQ`}</p>
         </div>
         <div className="text-right hidden sm:block">
           <div className="text-xs text-muted-foreground font-mono-data">Last updated</div>
-          <div className="text-xs text-foreground font-mono-data">Jun 23, 2026 · 16:00 EST</div>
+          <div className="text-xs text-foreground font-mono-data">{new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })} · 16:00 EST</div>
         </div>
       </div>
 
@@ -205,7 +223,7 @@ export default function HeroKPIGrid({ data, ticker }: HeroKPIGridProps) {
               {backtestRMSE < 0.02 ? 'HIGH CONFIDENCE' : backtestRMSE < 0.05 ? 'GOOD FIT' : 'MODERATE'}
             </div>
             <div className="text-xs text-muted-foreground mt-1.5">
-              Model R²: <span className="font-mono-data text-foreground">{(1 - backtestRMSE * 8).toFixed(4)}</span>
+              Avg Error: <span className="font-mono-data text-foreground">±{(backtestRMSE * 100).toFixed(2)}%</span>
             </div>
           </div>
         </div>

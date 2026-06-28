@@ -8,9 +8,18 @@ interface TopbarProps {
   currentTicker: string;
   onTickerSearch: (ticker: string) => void;
   isLoading: boolean;
+  tradingDays?: number;
 }
 
 const POPULAR_TICKERS = [
+  { symbol: 'RELIANCE', name: 'Reliance Industries Ltd.', change: '+0.00%', positive: true },
+  { symbol: 'TCS', name: 'Tata Consultancy Services', change: '+0.00%', positive: true },
+  { symbol: 'INFY', name: 'Infosys Ltd.', change: '+0.00%', positive: true },
+  { symbol: 'HDFCBANK', name: 'HDFC Bank Ltd.', change: '+0.00%', positive: true },
+  { symbol: 'ICICIBANK', name: 'ICICI Bank Ltd.', change: '+0.00%', positive: true },
+  { symbol: 'SBIN', name: 'State Bank of India', change: '+0.00%', positive: true },
+  { symbol: 'TATAMOTORS', name: 'Tata Motors Ltd.', change: '+0.00%', positive: true },
+  { symbol: 'LT', name: 'Larsen & Toubro Ltd.', change: '+0.00%', positive: true },
   { symbol: 'NVDA', name: 'NVIDIA Corporation', change: '+3.42%', positive: true },
   { symbol: 'AAPL', name: 'Apple Inc.', change: '+0.87%', positive: true },
   { symbol: 'TSLA', name: 'Tesla, Inc.', change: '-1.23%', positive: false },
@@ -23,7 +32,7 @@ const POPULAR_TICKERS = [
   { symbol: 'AMD', name: 'Advanced Micro Devices', change: '+4.77%', positive: true },
 ];
 
-export default function Topbar({ currentTicker, onTickerSearch, isLoading }: TopbarProps) {
+export default function Topbar({ currentTicker, onTickerSearch, isLoading, tradingDays }: TopbarProps) {
   const [searchValue, setSearchValue] = useState('');
   const [isFocused, setIsFocused] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
@@ -170,7 +179,7 @@ export default function Topbar({ currentTicker, onTickerSearch, isLoading }: Top
               <ChevronDown size={10} />
             </div>
 
-            <button className="flex items-center gap-2 px-3 py-1.5 rounded-lg border border-primary/30 bg-primary/5 text-primary text-sm font-medium hover:bg-primary/10 hover:border-primary/50 transition-all duration-150 active:scale-95">
+            <button onClick={handleAnalyze} className="flex items-center gap-2 px-3 py-1.5 rounded-lg border border-primary/30 bg-primary/5 text-primary text-sm font-medium hover:bg-primary/10 hover:border-primary/50 transition-all duration-150 active:scale-95">
               <Zap size={14} />
               <span className="hidden sm:block">Analyze</span>
             </button>
@@ -182,7 +191,7 @@ export default function Topbar({ currentTicker, onTickerSearch, isLoading }: Top
           <span className="text-xs text-muted-foreground">Active:</span>
           <span className="text-xs font-mono-data font-semibold text-primary">{currentTicker}</span>
           <span className="text-xs text-muted-foreground">·</span>
-          <span className="text-xs text-muted-foreground">Data coverage: 1,247 trading days</span>
+          <span className="text-xs text-muted-foreground">Data coverage: {tradingDays ? `${tradingDays.toLocaleString()} trading days` : 'calculating...'}</span>
           <span className="text-xs text-muted-foreground">·</span>
           <span className="text-xs text-muted-foreground">LSTM model: trained on 70/30 split</span>
           {isLoading && (

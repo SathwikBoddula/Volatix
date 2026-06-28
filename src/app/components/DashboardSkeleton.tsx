@@ -31,7 +31,7 @@ export default function DashboardSkeleton() {
         </div>
         <div className="text-center">
           <p className="text-sm font-semibold text-foreground mb-1">Ingesting market data & training LSTM model</p>
-          <p className="text-xs text-muted-foreground">Fetching 1,247 trading days · Computing RSI/MACD indicators · Running 100-day lookback window</p>
+          <p className="text-xs text-muted-foreground">Fetching historical trading data · Computing RSI/MACD indicators · Running 100-day lookback window</p>
         </div>
         <div className="w-64 h-1 bg-muted rounded-full overflow-hidden">
           <div className="h-full bg-primary rounded-full skeleton-dark" />

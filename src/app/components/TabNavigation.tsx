@@ -3,7 +3,6 @@
 import React from 'react';
 import { Table, TrendingUp, GitMerge, Activity, BarChart2, FlaskConical, Grid3X3, Cpu } from 'lucide-react';
 import type { TabId } from './AnalyticsDashboard';
-import Icon from '@/components/ui/AppIcon';
 
 
 interface TabNavigationProps {

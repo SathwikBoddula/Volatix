@@ -44,9 +44,10 @@ export default function AnalyticsDashboard() {
       <div className="grid-bg fixed inset-0 pointer-events-none opacity-40" />
 
       <Topbar
-        currentTicker={currentTicker}
-        onTickerSearch={handleTickerSearch}
-        isLoading={isLoading}
+      currentTicker={currentTicker}
+      onTickerSearch={handleTickerSearch}
+      isLoading={isLoading}
+      tradingDays={tickerData?.history?.length}
       />
 
       <main className="relative z-10 px-4 lg:px-8 xl:px-10 2xl:px-16 pb-16 pt-6 max-w-screen-2xl mx-auto">
