@@ -19,19 +19,34 @@ export default function DashboardSkeleton() {
       {/* Tab Bar Skeleton */}
       <div className="flex gap-2 border-b border-border pb-3 mb-6 overflow-hidden">
         {Array.from({ length: 8 })?.map((_, i) => (
-          <div key={`tab-skel-${i + 1}`} className="skeleton-dark h-9 rounded-md" style={{ width: `${80 + i * 8}px` }} />
+          <div
+            key={`tab-skel-${i + 1}`}
+            className="skeleton-dark h-9 rounded-md"
+            style={{ width: `${80 + i * 8}px` }}
+          />
         ))}
       </div>
       {/* Processing Status */}
       <div className="glass-card rounded-xl p-8 flex flex-col items-center justify-center gap-4">
         <div className="flex items-center gap-3">
           <div className="w-2 h-2 rounded-full bg-primary animate-glow-pulse" />
-          <div className="w-2 h-2 rounded-full bg-accent animate-glow-pulse" style={{ animationDelay: '0.3s' }} />
-          <div className="w-2 h-2 rounded-full bg-primary animate-glow-pulse" style={{ animationDelay: '0.6s' }} />
+          <div
+            className="w-2 h-2 rounded-full bg-accent animate-glow-pulse"
+            style={{ animationDelay: '0.3s' }}
+          />
+          <div
+            className="w-2 h-2 rounded-full bg-primary animate-glow-pulse"
+            style={{ animationDelay: '0.6s' }}
+          />
         </div>
         <div className="text-center">
-          <p className="text-sm font-semibold text-foreground mb-1">Ingesting market data & training LSTM model</p>
-          <p className="text-xs text-muted-foreground">Fetching historical trading data · Computing RSI/MACD indicators · Running 100-day lookback window</p>
+          <p className="text-sm font-semibold text-foreground mb-1">
+            Ingesting market data & training LSTM model
+          </p>
+          <p className="text-xs text-muted-foreground">
+            Fetching historical trading data · Computing RSI/MACD indicators · Running 100-day
+            lookback window
+          </p>
         </div>
         <div className="w-64 h-1 bg-muted rounded-full overflow-hidden">
           <div className="h-full bg-primary rounded-full skeleton-dark" />
@@ -41,12 +56,14 @@ export default function DashboardSkeleton() {
             { label: 'Data Ingestion', status: 'Complete' },
             { label: 'Indicator Engine', status: 'Complete' },
             { label: 'LSTM Training', status: 'Running...' },
-          ]?.map(item => (
+          ]?.map((item) => (
             <div key={`status-${item?.label}`}>
               <div className="text-xs text-muted-foreground">{item?.label}</div>
-              <div className={`text-xs font-mono-data font-semibold mt-0.5 ${
-                item?.status === 'Complete' ? 'text-positive' : 'text-warning-amber animate-pulse'
-              }`}>
+              <div
+                className={`text-xs font-mono-data font-semibold mt-0.5 ${
+                  item?.status === 'Complete' ? 'text-positive' : 'text-warning-amber animate-pulse'
+                }`}
+              >
                 {item?.status}
               </div>
             </div>

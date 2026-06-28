@@ -87,35 +87,35 @@ function formatDate(d: Date): string {
 }
 
 // Ticker-specific base prices and volatility profiles
-const TICKER_PROFILES: Record<string, { base: number; vol: number; trend: number; seed: number }> = {
-  NVDA:  { base: 1087.42, vol: 0.028, trend: 0.0008,  seed: 42 },
-'RELIANCE.NS': { base: 2950.00, vol: 0.015, trend: 0.0001, seed: 101 },
-  RELIANCE:      { base: 2950.00, vol: 0.015, trend: 0.0001, seed: 101 },
-  'TCS.NS':      { base: 3850.00, vol: 0.012, trend: 0.0001, seed: 202 },
-  TCS:           { base: 3850.00, vol: 0.012, trend: 0.0001, seed: 202 },
-  'INFY.NS':     { base: 1520.00, vol: 0.020, trend: 0.0002, seed: 303 },
-  INFY:          { base: 1520.00, vol: 0.020, trend: 0.0002, seed: 303 },
-  'HDFCBANK.NS': { base: 1610.00, vol: 0.013, trend: 0.0001, seed: 505 },
-  HDFCBANK:      { base: 1610.00, vol: 0.013, trend: 0.0001, seed: 505 },
-  'TATAMOTORS.NS': { base: 940.00, vol: 0.028, trend: 0.0004, seed: 404 },
-  TATAMOTORS:    { base: 940.00,  vol: 0.028, trend: 0.0004, seed: 404 },
-  'SBIN.NS':     { base: 820.00,  vol: 0.018, trend: 0.0002, seed: 606 },
-  SBIN:          { base: 820.00,  vol: 0.018, trend: 0.0002, seed: 606 },
-  'WIPRO.NS':    { base: 480.00,  vol: 0.016, trend: 0.0001, seed: 707 },
-  WIPRO:         { base: 480.00,  vol: 0.016, trend: 0.0001, seed: 707 },
-  AAPL:  { base: 211.56,  vol: 0.014, trend: 0.0003,  seed: 77 },
-  TSLA:  { base: 248.30,  vol: 0.038, trend: -0.0002, seed: 13 },
-  MSFT:  { base: 447.80,  vol: 0.016, trend: 0.0004,  seed: 55 },
-  AMZN:  { base: 198.45,  vol: 0.020, trend: 0.0005,  seed: 88 },
-  META:  { base: 523.70,  vol: 0.022, trend: 0.0006,  seed: 31 },
-  GOOGL: { base: 178.90,  vol: 0.017, trend: 0.0003,  seed: 64 },
-  SPY:   { base: 542.30,  vol: 0.010, trend: 0.0002,  seed: 99 },
-  QQQ:   { base: 473.60,  vol: 0.013, trend: 0.0003,  seed: 22 },
-  AMD:   { base: 162.40,  vol: 0.032, trend: 0.0004,  seed: 47 },
-};
+const TICKER_PROFILES: Record<string, { base: number; vol: number; trend: number; seed: number }> =
+  {
+    NVDA: { base: 1087.42, vol: 0.028, trend: 0.0008, seed: 42 },
+    'RELIANCE.NS': { base: 2950.0, vol: 0.015, trend: 0.0001, seed: 101 },
+    RELIANCE: { base: 2950.0, vol: 0.015, trend: 0.0001, seed: 101 },
+    'TCS.NS': { base: 3850.0, vol: 0.012, trend: 0.0001, seed: 202 },
+    TCS: { base: 3850.0, vol: 0.012, trend: 0.0001, seed: 202 },
+    'INFY.NS': { base: 1520.0, vol: 0.02, trend: 0.0002, seed: 303 },
+    INFY: { base: 1520.0, vol: 0.02, trend: 0.0002, seed: 303 },
+    'HDFCBANK.NS': { base: 1610.0, vol: 0.013, trend: 0.0001, seed: 505 },
+    HDFCBANK: { base: 1610.0, vol: 0.013, trend: 0.0001, seed: 505 },
+    'TATAMOTORS.NS': { base: 940.0, vol: 0.028, trend: 0.0004, seed: 404 },
+    TATAMOTORS: { base: 940.0, vol: 0.028, trend: 0.0004, seed: 404 },
+    'SBIN.NS': { base: 820.0, vol: 0.018, trend: 0.0002, seed: 606 },
+    SBIN: { base: 820.0, vol: 0.018, trend: 0.0002, seed: 606 },
+    'WIPRO.NS': { base: 480.0, vol: 0.016, trend: 0.0001, seed: 707 },
+    WIPRO: { base: 480.0, vol: 0.016, trend: 0.0001, seed: 707 },
+    AAPL: { base: 211.56, vol: 0.014, trend: 0.0003, seed: 77 },
+    TSLA: { base: 248.3, vol: 0.038, trend: -0.0002, seed: 13 },
+    MSFT: { base: 447.8, vol: 0.016, trend: 0.0004, seed: 55 },
+    AMZN: { base: 198.45, vol: 0.02, trend: 0.0005, seed: 88 },
+    META: { base: 523.7, vol: 0.022, trend: 0.0006, seed: 31 },
+    GOOGL: { base: 178.9, vol: 0.017, trend: 0.0003, seed: 64 },
+    SPY: { base: 542.3, vol: 0.01, trend: 0.0002, seed: 99 },
+    QQQ: { base: 473.6, vol: 0.013, trend: 0.0003, seed: 22 },
+    AMD: { base: 162.4, vol: 0.032, trend: 0.0004, seed: 47 },
+  };
 
-
-const DEFAULT_PROFILE = { base: 150.00, vol: 0.022, trend: 0.0003, seed: 11 };
+const DEFAULT_PROFILE = { base: 150.0, vol: 0.022, trend: 0.0003, seed: 11 };
 
 export function generateMockData(ticker: string): TickerData | null {
   const profile = TICKER_PROFILES[ticker];
@@ -195,7 +195,8 @@ export function generateMockData(ticker: string): TickerData | null {
     const macdLine = ema12 - ema26;
 
     // Signal = EMA9 of MACD (approximate)
-    const macdSignal = macdLine * 0.85 + (seededRand(profile.seed + i + 1000)() - 0.5) * Math.abs(macdLine) * 0.3;
+    const macdSignal =
+      macdLine * 0.85 + (seededRand(profile.seed + i + 1000)() - 0.5) * Math.abs(macdLine) * 0.3;
     const macdHistogram = macdLine - macdSignal;
 
     const rowDate = subtractBusinessDays(baseDate, i);
@@ -272,8 +273,10 @@ export function generateMockData(ticker: string): TickerData | null {
   const ma250 = rollingMA(prices, 250, 0);
 
   // RMSE from backtest
-  const squaredErrors = backtest.map(b => Math.pow((b.predicted - b.actual) / b.actual, 2));
-  const rmse = parseFloat(Math.sqrt(squaredErrors.reduce((a, b) => a + b, 0) / squaredErrors.length).toFixed(4));
+  const squaredErrors = backtest.map((b) => Math.pow((b.predicted - b.actual) / b.actual, 2));
+  const rmse = parseFloat(
+    Math.sqrt(squaredErrors.reduce((a, b) => a + b, 0) / squaredErrors.length).toFixed(4)
+  );
 
   return {
     summary: {

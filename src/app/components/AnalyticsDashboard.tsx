@@ -9,7 +9,14 @@ import DashboardSkeleton from './DashboardSkeleton';
 import { generateMockData, type TickerData } from '../data/mockData';
 
 export type TabId =
-  | 'overview' |'moving-averages' |'combined-trends' |'rsi-momentum' |'macd-convergence' |'backtest' |'forecast-grid' |'ai-trajectory';
+  | 'overview'
+  | 'moving-averages'
+  | 'combined-trends'
+  | 'rsi-momentum'
+  | 'macd-convergence'
+  | 'backtest'
+  | 'forecast-grid'
+  | 'ai-trajectory';
 
 export default function AnalyticsDashboard() {
   const [activeTab, setActiveTab] = useState<TabId>('overview');
@@ -24,29 +31,28 @@ export default function AnalyticsDashboard() {
 
     // Simulate LSTM model training + data ingestion latency
     setTimeout(() => {
-  const result = generateMockData(ticker);
-  if (!result) {
-    setCurrentTicker('');
-    setTickerData(null);
-    setIsLoading(false);
-    toast.error(`"${ticker}" not found. Try AAPL, NVDA, RELIANCE.NS etc.`);
-    return;
-  }
-  setTickerData(result);
-  setIsLoading(false);
-}, 2800);
-}, []);
-
+      const result = generateMockData(ticker);
+      if (!result) {
+        setCurrentTicker('');
+        setTickerData(null);
+        setIsLoading(false);
+        toast.error(`"${ticker}" not found. Try AAPL, NVDA, RELIANCE.NS etc.`);
+        return;
+      }
+      setTickerData(result);
+      setIsLoading(false);
+    }, 2800);
+  }, []);
 
   return (
     <div className="min-h-screen bg-background bg-grid-subtle">
       <div className="grid-bg fixed inset-0 pointer-events-none opacity-40" />
 
       <Topbar
-      currentTicker={currentTicker}
-      onTickerSearch={handleTickerSearch}
-      isLoading={isLoading}
-      tradingDays={tickerData?.history?.length}
+        currentTicker={currentTicker}
+        onTickerSearch={handleTickerSearch}
+        isLoading={isLoading}
+        tradingDays={tickerData?.history?.length}
       />
 
       <main className="relative z-10 px-4 lg:px-8 xl:px-10 2xl:px-16 pb-16 pt-6 max-w-screen-2xl mx-auto">

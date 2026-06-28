@@ -12,15 +12,14 @@ export const viewport: Viewport = {
 
 export const metadata: Metadata = {
   title: 'Volatix — Institutional Stock Analytics & AI Prediction',
-  description: 'Volatix delivers institutional-grade stock analytics with LSTM-powered 7-day price forecasts, RSI/MACD signal detection, and multi-timeframe moving average analysis for professional traders.',
+  description:
+    'Volatix delivers institutional-grade stock analytics with LSTM-powered 7-day price forecasts, RSI/MACD signal detection, and multi-timeframe moving average analysis for professional traders.',
   icons: {
     icon: [{ url: '/favicon.ico', type: 'image/x-icon' }],
   },
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{ children: React.ReactNode }>) {
+export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" className={`${GeistSans.variable} ${GeistMono.variable}`}>
       <body className={GeistSans.className}>

@@ -1,27 +1,61 @@
 'use client';
 import { formatPrice } from '@/utils/formatCurrency';
 import React from 'react';
-import { ResponsiveContainer, ComposedChart, Area, Line, XAxis, YAxis, CartesianGrid, Tooltip, ReferenceLine } from 'recharts';
+import {
+  ResponsiveContainer,
+  ComposedChart,
+  Area,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ReferenceLine,
+} from 'recharts';
 import type { TickerData } from '../../data/mockData';
 
-interface Props { data: TickerData; ticker: string; }
+interface Props {
+  data: TickerData;
+  ticker: string;
+}
 
-const CustomTooltip = ({ active, payload, label, ticker }: { active?: boolean; payload?: Array<{ name: string; value: number; dataKey: string; color: string }>; label?: string; ticker?: string }) => {
+const CustomTooltip = ({
+  active,
+  payload,
+  label,
+  ticker,
+}: {
+  active?: boolean;
+  payload?: Array<{ name: string; value: number; dataKey: string; color: string }>;
+  label?: string;
+  ticker?: string;
+}) => {
   if (!active || !payload?.length) return null;
-  const isForecast = payload.some(p => p.dataKey === 'forecasted');
+  const isForecast = payload.some((p) => p.dataKey === 'forecasted');
   return (
-    <div className={`rounded-lg p-3 border shadow-2xl min-w-[200px] ${isForecast ? 'glass-card border-accent/30' : 'glass-card border-border'}`}>
+    <div
+      className={`rounded-lg p-3 border shadow-2xl min-w-[200px] ${isForecast ? 'glass-card border-accent/30' : 'glass-card border-border'}`}
+    >
       <div className="flex items-center gap-2 mb-2">
-        {isForecast && <span className="text-xs px-1.5 py-0.5 rounded bg-accent/10 text-accent border border-accent/20 font-mono-data">AI FORECAST</span>}
+        {isForecast && (
+          <span className="text-xs px-1.5 py-0.5 rounded bg-accent/10 text-accent border border-accent/20 font-mono-data">
+            AI FORECAST
+          </span>
+        )}
         <p className="text-xs font-mono-data text-muted-foreground">{label}</p>
       </div>
-      {payload.map(p => (
-        <div key={`tt-ai-${p.dataKey}-${p.name}`} className="flex items-center justify-between gap-4 mb-1">
+      {payload.map((p) => (
+        <div
+          key={`tt-ai-${p.dataKey}-${p.name}`}
+          className="flex items-center justify-between gap-4 mb-1"
+        >
           <div className="flex items-center gap-1.5">
             <div className="w-2 h-2 rounded-full" style={{ background: p.color }} />
             <span className="text-xs text-muted-foreground">{p.name}</span>
           </div>
-          <span className="text-xs font-mono-data font-semibold text-foreground">{formatPrice(p.value, ticker || '')}</span>
+          <span className="text-xs font-mono-data font-semibold text-foreground">
+            {formatPrice(p.value, ticker || '')}
+          </span>
         </div>
       ))}
     </div>
@@ -35,7 +69,7 @@ export default function AITrajectoryChart({ data, ticker }: Props) {
   // Stitch history + forecast for continuous line
   const lastHistDate = recentHistory[recentHistory.length - 1];
   const combinedData = [
-    ...recentHistory.map(d => ({
+    ...recentHistory.map((d) => ({
       date: d.date,
       actual: d.close,
       forecasted: null as number | null,
@@ -52,7 +86,7 @@ export default function AITrajectoryChart({ data, ticker }: Props) {
       forecastHigh: null as number | null,
       isForecast: false,
     },
-    ...forecast.map(f => ({
+    ...forecast.map((f) => ({
       date: f.date,
       actual: null as number | null,
       forecasted: f.predicted,
@@ -62,7 +96,8 @@ export default function AITrajectoryChart({ data, ticker }: Props) {
     })),
   ];
 
-  const totalReturn = ((forecast[forecast.length - 1].predicted - summary.currentPrice) / summary.currentPrice) * 100;
+  const totalReturn =
+    ((forecast[forecast.length - 1].predicted - summary.currentPrice) / summary.currentPrice) * 100;
   const isPositive = totalReturn > 0;
 
   return (
@@ -70,13 +105,21 @@ export default function AITrajectoryChart({ data, ticker }: Props) {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-5">
         <div>
           <h2 className="text-lg font-semibold text-foreground">{ticker} AI Trajectory</h2>
-          <p className="text-sm text-muted-foreground">LSTM neural network · 60-day context + 7-day forward prediction</p>
+          <p className="text-sm text-muted-foreground">
+            LSTM neural network · 60-day context + 7-day forward prediction
+          </p>
         </div>
         <div className="flex items-center gap-3">
-          <div className={`flex items-center gap-2 px-3 py-1.5 rounded-lg border text-xs font-mono-data font-semibold ${
-            isPositive ? 'bg-success/10 border-success/20 text-positive' : 'bg-danger/10 border-danger/20 text-negative'
-          }`}>
-            AI Target: {formatPrice(forecast[forecast.length - 1].predicted, ticker)} ({isPositive ? '+' : ''}{totalReturn.toFixed(2)}%)
+          <div
+            className={`flex items-center gap-2 px-3 py-1.5 rounded-lg border text-xs font-mono-data font-semibold ${
+              isPositive
+                ? 'bg-success/10 border-success/20 text-positive'
+                : 'bg-danger/10 border-danger/20 text-negative'
+            }`}
+          >
+            AI Target: {formatPrice(forecast[forecast.length - 1].predicted, ticker)} (
+            {isPositive ? '+' : ''}
+            {totalReturn.toFixed(2)}%)
           </div>
         </div>
       </div>
@@ -127,16 +170,24 @@ export default function AITrajectoryChart({ data, ticker }: Props) {
             <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" opacity={0.4} />
             <XAxis
               dataKey="date"
-              tick={{ fill: 'var(--muted-foreground)', fontSize: 11, fontFamily: 'var(--font-mono)' }}
+              tick={{
+                fill: 'var(--muted-foreground)',
+                fontSize: 11,
+                fontFamily: 'var(--font-mono)',
+              }}
               tickLine={false}
               axisLine={{ stroke: 'var(--border)' }}
               interval={Math.floor(combinedData.length / 10)}
             />
             <YAxis
-              tick={{ fill: 'var(--muted-foreground)', fontSize: 11, fontFamily: 'var(--font-mono)' }}
+              tick={{
+                fill: 'var(--muted-foreground)',
+                fontSize: 11,
+                fontFamily: 'var(--font-mono)',
+              }}
               tickLine={false}
               axisLine={false}
-              tickFormatter={v => formatPrice(v, ticker)}
+              tickFormatter={(v) => formatPrice(v, ticker)}
               width={70}
               domain={['auto', 'auto']}
             />
@@ -186,10 +237,17 @@ export default function AITrajectoryChart({ data, ticker }: Props) {
               stroke="var(--accent)"
               strokeWidth={2.5}
               dot={(props) => {
-                if (!props.payload.isForecast || props.payload.forecasted === null) return <g key={`dot-empty-${props.index}`} />;
+                if (!props.payload.isForecast || props.payload.forecasted === null)
+                  return <g key={`dot-empty-${props.index}`} />;
                 return (
                   <g key={`dot-forecast-${props.index}`}>
-                    <circle cx={props.cx} cy={props.cy} r={8} fill="var(--accent)" fillOpacity={0.15} />
+                    <circle
+                      cx={props.cx}
+                      cy={props.cy}
+                      r={8}
+                      fill="var(--accent)"
+                      fillOpacity={0.15}
+                    />
                     <circle cx={props.cx} cy={props.cy} r={4} fill="var(--accent)" />
                     <circle cx={props.cx} cy={props.cy} r={2} fill="white" fillOpacity={0.9} />
                   </g>
@@ -243,17 +301,28 @@ export default function AITrajectoryChart({ data, ticker }: Props) {
               key={`node-${f.date}`}
               className={`rounded-xl p-3 border text-center transition-all duration-200 hover:scale-105 ${
                 isUp
-                  ? 'glass-card border-accent/20 hover:border-accent/40' :'glass-card border-danger/20 hover:border-danger/30'
+                  ? 'glass-card border-accent/20 hover:border-accent/40'
+                  : 'glass-card border-danger/20 hover:border-danger/30'
               }`}
             >
               <div className="text-xs text-muted-foreground font-mono-data mb-1">D+{idx + 1}</div>
-              <div className="text-xs text-muted-foreground font-mono-data mb-2 truncate">{f.date}</div>
-              <div className="font-mono-data text-sm font-bold text-foreground">{formatPrice(f.predicted, ticker)}</div>
-              <div className={`text-xs font-mono-data mt-1 ${isUp ? 'text-positive' : 'text-negative'}`}>
-                {isUp ? '+' : ''}{delta.toFixed(1)}%
+              <div className="text-xs text-muted-foreground font-mono-data mb-2 truncate">
+                {f.date}
               </div>
-              <div className={`text-xs font-mono-data ${dayDelta >= 0 ? 'text-positive' : 'text-negative'} opacity-70`}>
-                {dayDelta >= 0 ? '▲' : '▼'}{Math.abs(dayDelta).toFixed(1)}%
+              <div className="font-mono-data text-sm font-bold text-foreground">
+                {formatPrice(f.predicted, ticker)}
+              </div>
+              <div
+                className={`text-xs font-mono-data mt-1 ${isUp ? 'text-positive' : 'text-negative'}`}
+              >
+                {isUp ? '+' : ''}
+                {delta.toFixed(1)}%
+              </div>
+              <div
+                className={`text-xs font-mono-data ${dayDelta >= 0 ? 'text-positive' : 'text-negative'} opacity-70`}
+              >
+                {dayDelta >= 0 ? '▲' : '▼'}
+                {Math.abs(dayDelta).toFixed(1)}%
               </div>
               <div className="mt-2 w-full h-1 rounded-full bg-muted overflow-hidden">
                 <div
@@ -277,7 +346,7 @@ export default function AITrajectoryChart({ data, ticker }: Props) {
             { label: 'Train Split', value: '70 / 30' },
             { label: 'Scaling', value: 'MinMax [0,1]' },
             { label: 'Input Feature', value: 'Close Price' },
-          ].map(item => (
+          ].map((item) => (
             <div key={`arch-${item.label}`}>
               <div className="text-xs text-muted-foreground mb-0.5">{item.label}</div>
               <div className="font-mono-data text-xs font-semibold text-primary">{item.value}</div>

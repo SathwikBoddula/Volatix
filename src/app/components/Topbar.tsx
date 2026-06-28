@@ -33,13 +33,31 @@ const POPULAR_TICKERS = [
 ];
 // Add above the component, below POPULAR_TICKERS
 const EXCHANGE_MAP: Record<string, string> = {
-  RELIANCE: 'NSE', TCS: 'NSE', INFY: 'NSE', HDFCBANK: 'NSE',
-  ICICIBANK: 'NSE', SBIN: 'NSE', TATAMOTORS: 'NSE', LT: 'NSE',
-  NVDA: 'NASDAQ', AAPL: 'NASDAQ', TSLA: 'NASDAQ', MSFT: 'NASDAQ',
-  AMZN: 'NASDAQ', META: 'NASDAQ', GOOGL: 'NASDAQ', AMD: 'NASDAQ',
-  SPY: 'NYSE', QQQ: 'NASDAQ',
+  RELIANCE: 'NSE',
+  TCS: 'NSE',
+  INFY: 'NSE',
+  HDFCBANK: 'NSE',
+  ICICIBANK: 'NSE',
+  SBIN: 'NSE',
+  TATAMOTORS: 'NSE',
+  LT: 'NSE',
+  NVDA: 'NASDAQ',
+  AAPL: 'NASDAQ',
+  TSLA: 'NASDAQ',
+  MSFT: 'NASDAQ',
+  AMZN: 'NASDAQ',
+  META: 'NASDAQ',
+  GOOGL: 'NASDAQ',
+  AMD: 'NASDAQ',
+  SPY: 'NYSE',
+  QQQ: 'NASDAQ',
 };
-export default function Topbar({ currentTicker, onTickerSearch, isLoading, tradingDays }: TopbarProps) {
+export default function Topbar({
+  currentTicker,
+  onTickerSearch,
+  isLoading,
+  tradingDays,
+}: TopbarProps) {
   const [searchValue, setSearchValue] = useState('');
   const currentExchange = EXCHANGE_MAP[currentTicker] ?? '—';
   const [isFocused, setIsFocused] = useState(false);
@@ -47,13 +65,14 @@ export default function Topbar({ currentTicker, onTickerSearch, isLoading, tradi
   const inputRef = useRef<HTMLInputElement>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
-  const filteredTickers = searchValue.length > 0
-    ? POPULAR_TICKERS.filter(
-        t =>
-          t.symbol.toLowerCase().includes(searchValue.toLowerCase()) ||
-          t.name.toLowerCase().includes(searchValue.toLowerCase())
-      )
-    : POPULAR_TICKERS;
+  const filteredTickers =
+    searchValue.length > 0
+      ? POPULAR_TICKERS.filter(
+          (t) =>
+            t.symbol.toLowerCase().includes(searchValue.toLowerCase()) ||
+            t.name.toLowerCase().includes(searchValue.toLowerCase())
+        )
+      : POPULAR_TICKERS;
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -81,7 +100,7 @@ export default function Topbar({ currentTicker, onTickerSearch, isLoading, tradi
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
-  
+
   const handleAnalyze = () => {
     const val = searchValue.trim().toUpperCase();
     if (val) {
@@ -95,7 +114,10 @@ export default function Topbar({ currentTicker, onTickerSearch, isLoading, tradi
   };
 
   return (
-    <header className="sticky top-0 z-50 border-b border-border" style={{ background: 'rgba(10, 10, 12, 0.92)', backdropFilter: 'blur(20px)' }}>
+    <header
+      className="sticky top-0 z-50 border-b border-border"
+      style={{ background: 'rgba(10, 10, 12, 0.92)', backdropFilter: 'blur(20px)' }}
+    >
       <div className="px-4 lg:px-8 xl:px-10 2xl:px-16 max-w-screen-2xl mx-auto">
         <div className="flex items-center justify-between h-16 gap-6">
           {/* Logo */}
@@ -103,17 +125,22 @@ export default function Topbar({ currentTicker, onTickerSearch, isLoading, tradi
             <AppLogo size={32} />
             <div className="flex items-center gap-1.5">
               <span className="font-bold text-xl tracking-tight text-foreground">Volatix</span>
-              <span className="text-xs font-mono-data px-1.5 py-0.5 rounded text-primary border border-primary/30 bg-primary/5 leading-none">PRO</span>
+              <span className="text-xs font-mono-data px-1.5 py-0.5 rounded text-primary border border-primary/30 bg-primary/5 leading-none">
+                PRO
+              </span>
             </div>
           </div>
 
           {/* Ticker Search */}
           <div className="flex-1 max-w-xl relative" ref={dropdownRef}>
             <form onSubmit={handleSubmit}>
-              <div className={`flex items-center gap-2 px-3 py-2 rounded-lg border transition-all duration-200 ${
-                isFocused
-                  ? 'border-primary/50 bg-card glow-cyan' :'border-border bg-muted/50 hover:border-border/80'
-              }`}>
+              <div
+                className={`flex items-center gap-2 px-3 py-2 rounded-lg border transition-all duration-200 ${
+                  isFocused
+                    ? 'border-primary/50 bg-card glow-cyan'
+                    : 'border-border bg-muted/50 hover:border-border/80'
+                }`}
+              >
                 {isLoading ? (
                   <Loader2 size={16} className="text-primary animate-spin flex-shrink-0" />
                 ) : (
@@ -123,8 +150,11 @@ export default function Topbar({ currentTicker, onTickerSearch, isLoading, tradi
                   ref={inputRef}
                   type="text"
                   value={searchValue}
-                  onChange={e => setSearchValue(e.target.value)}
-                  onFocus={() => { setIsFocused(true); setShowDropdown(true); }}
+                  onChange={(e) => setSearchValue(e.target.value)}
+                  onFocus={() => {
+                    setIsFocused(true);
+                    setShowDropdown(true);
+                  }}
                   onBlur={() => setIsFocused(false)}
                   placeholder="Search ticker — NVDA, AAPL, TSLA..."
                   className="flex-1 bg-transparent text-sm text-foreground placeholder-muted-foreground outline-none font-mono-data"
@@ -159,7 +189,7 @@ export default function Topbar({ currentTicker, onTickerSearch, isLoading, tradi
                       No tickers found for &quot;{searchValue}&quot;
                     </div>
                   ) : (
-                    filteredTickers.map(ticker => (
+                    filteredTickers.map((ticker) => (
                       <button
                         key={`ticker-${ticker.symbol}`}
                         type="button"
@@ -171,11 +201,17 @@ export default function Topbar({ currentTicker, onTickerSearch, isLoading, tradi
                             <TrendingUp size={12} className="text-primary" />
                           </div>
                           <div>
-                            <div className="text-sm font-semibold text-foreground font-mono-data">{ticker.symbol}</div>
-                            <div className="text-xs text-muted-foreground truncate max-w-[180px]">{ticker.name}</div>
+                            <div className="text-sm font-semibold text-foreground font-mono-data">
+                              {ticker.symbol}
+                            </div>
+                            <div className="text-xs text-muted-foreground truncate max-w-[180px]">
+                              {ticker.name}
+                            </div>
                           </div>
                         </div>
-                        <span className={`text-xs font-mono-data font-semibold ${ticker.positive ? 'text-positive' : 'text-negative'}`}>
+                        <span
+                          className={`text-xs font-mono-data font-semibold ${ticker.positive ? 'text-positive' : 'text-negative'}`}
+                        >
                           {ticker.change}
                         </span>
                       </button>
@@ -198,7 +234,10 @@ export default function Topbar({ currentTicker, onTickerSearch, isLoading, tradi
               <span className="font-mono-data">{currentExchange}</span>
             </div>
 
-            <button onClick={handleAnalyze} className="flex items-center gap-2 px-3 py-1.5 rounded-lg border border-primary/30 bg-primary/5 text-primary text-sm font-medium hover:bg-primary/10 hover:border-primary/50 transition-all duration-150 active:scale-95">
+            <button
+              onClick={handleAnalyze}
+              className="flex items-center gap-2 px-3 py-1.5 rounded-lg border border-primary/30 bg-primary/5 text-primary text-sm font-medium hover:bg-primary/10 hover:border-primary/50 transition-all duration-150 active:scale-95"
+            >
               <Zap size={14} />
               <span className="hidden sm:block">Analyze</span>
             </button>
@@ -210,13 +249,18 @@ export default function Topbar({ currentTicker, onTickerSearch, isLoading, tradi
           <span className="text-xs text-muted-foreground">Active:</span>
           <span className="text-xs font-mono-data font-semibold text-primary">{currentTicker}</span>
           <span className="text-xs text-muted-foreground">·</span>
-          <span className="text-xs text-muted-foreground">Data coverage: {tradingDays ? `${tradingDays.toLocaleString()} trading days` : 'calculating...'}</span>
+          <span className="text-xs text-muted-foreground">
+            Data coverage:{' '}
+            {tradingDays ? `${tradingDays.toLocaleString()} trading days` : 'calculating...'}
+          </span>
           <span className="text-xs text-muted-foreground">·</span>
           <span className="text-xs text-muted-foreground">LSTM model: trained on 70/30 split</span>
           {isLoading && (
             <>
               <span className="text-xs text-muted-foreground">·</span>
-              <span className="text-xs text-warning-amber animate-pulse">Processing LSTM model...</span>
+              <span className="text-xs text-warning-amber animate-pulse">
+                Processing LSTM model...
+              </span>
             </>
           )}
         </div>

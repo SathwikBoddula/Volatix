@@ -1,16 +1,29 @@
 'use client';
 
 import React from 'react';
-import { Table, TrendingUp, GitMerge, Activity, BarChart2, FlaskConical, Grid3X3, Cpu } from 'lucide-react';
+import {
+  Table,
+  TrendingUp,
+  GitMerge,
+  Activity,
+  BarChart2,
+  FlaskConical,
+  Grid3X3,
+  Cpu,
+} from 'lucide-react';
 import type { TabId } from './AnalyticsDashboard';
-
 
 interface TabNavigationProps {
   activeTab: TabId;
   onTabChange: (tab: TabId) => void;
 }
 
-const TABS: { id: TabId; label: string; icon: React.ComponentType<{ size?: number; className?: string }>; shortLabel: string }[] = [
+const TABS: {
+  id: TabId;
+  label: string;
+  icon: React.ComponentType<{ size?: number; className?: string }>;
+  shortLabel: string;
+}[] = [
   { id: 'overview', label: 'Overview Matrix', shortLabel: 'Overview', icon: Table },
   { id: 'moving-averages', label: 'Moving Averages', shortLabel: 'MA Lines', icon: TrendingUp },
   { id: 'combined-trends', label: 'Combined Trends', shortLabel: 'Trends', icon: GitMerge },
