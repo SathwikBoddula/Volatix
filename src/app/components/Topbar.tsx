@@ -31,9 +31,17 @@ const POPULAR_TICKERS = [
   { symbol: 'QQQ', name: 'Invesco QQQ Trust', change: '+1.18%', positive: true },
   { symbol: 'AMD', name: 'Advanced Micro Devices', change: '+4.77%', positive: true },
 ];
-
+// Add above the component, below POPULAR_TICKERS
+const EXCHANGE_MAP: Record<string, string> = {
+  RELIANCE: 'NSE', TCS: 'NSE', INFY: 'NSE', HDFCBANK: 'NSE',
+  ICICIBANK: 'NSE', SBIN: 'NSE', TATAMOTORS: 'NSE', LT: 'NSE',
+  NVDA: 'NASDAQ', AAPL: 'NASDAQ', TSLA: 'NASDAQ', MSFT: 'NASDAQ',
+  AMZN: 'NASDAQ', META: 'NASDAQ', GOOGL: 'NASDAQ', AMD: 'NASDAQ',
+  SPY: 'NYSE', QQQ: 'NASDAQ',
+};
 export default function Topbar({ currentTicker, onTickerSearch, isLoading, tradingDays }: TopbarProps) {
   const [searchValue, setSearchValue] = useState('');
+  const currentExchange = EXCHANGE_MAP[currentTicker] ?? '—';
   const [isFocused, setIsFocused] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -73,6 +81,18 @@ export default function Topbar({ currentTicker, onTickerSearch, isLoading, tradi
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
+  
+  const handleAnalyze = () => {
+    const val = searchValue.trim().toUpperCase();
+    if (val) {
+      onTickerSearch(val);
+      setShowDropdown(false);
+      setSearchValue('');
+      inputRef.current?.blur();
+    } else if (currentTicker) {
+      onTickerSearch(currentTicker);
+    }
+  };
 
   return (
     <header className="sticky top-0 z-50 border-b border-border" style={{ background: 'rgba(10, 10, 12, 0.92)', backdropFilter: 'blur(20px)' }}>
@@ -175,8 +195,7 @@ export default function Topbar({ currentTicker, onTickerSearch, isLoading, tradi
 
             <div className="hidden lg:flex items-center gap-1.5 text-xs text-muted-foreground">
               <Activity size={12} />
-              <span className="font-mono-data">NYSE</span>
-              <ChevronDown size={10} />
+              <span className="font-mono-data">{currentExchange}</span>
             </div>
 
             <button onClick={handleAnalyze} className="flex items-center gap-2 px-3 py-1.5 rounded-lg border border-primary/30 bg-primary/5 text-primary text-sm font-medium hover:bg-primary/10 hover:border-primary/50 transition-all duration-150 active:scale-95">

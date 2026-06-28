@@ -19,7 +19,6 @@ export default function AnalyticsDashboard() {
 
   // Backend integration point: replace this with actual API call to Twelve Data / yfinance
   const handleTickerSearch = useCallback((ticker: string) => {
-    if (ticker === currentTicker) return;
     setIsLoading(true);
     setCurrentTicker(ticker);
 
@@ -36,7 +35,7 @@ export default function AnalyticsDashboard() {
   setTickerData(result);
   setIsLoading(false);
 }, 2800);
-}, [currentTicker]);
+}, []);
 
 
   return (
